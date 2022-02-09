@@ -17,7 +17,7 @@ class HeaderDB: ## Just a clean way to store these headers
     ## Create pretty graph after all is done:
     def issue_graph(self,findings):
         self._total = 0 # count the findings
-        self._mod = 2 # making the bars longer
+        self._mod = 4 # making the bars longer
         self._style.header("Issues Graph")
         for k,v in findings.items():
             color = self._style.YLLBG # default value
@@ -27,15 +27,18 @@ class HeaderDB: ## Just a clean way to store these headers
                 color = self._style.REDBG
             elif k=="info": # change if info
                 color = self._style.BLUEBG
-            for i in range(v*self._mod):
-                if(i==0):
-                    print(f" {k}:\t{color}{self._style.BLK}{v}",end="")
-                else:
-                    print(f"{color} ",end="")
-                self._total = self._total + 1 # increment for later:
-            print(f"{self._style.RST}") # newline after earch bar.
+            if v > 0: # Do not print empty bars:
+                for i in range(v*self._mod):
+                    if(i==0):
+                        print(f" {k}:\t{color}{self._style.BLK}{v}",end="")
+                    else:
+                        print(f"{color} ",end="")
+                    self._total = self._total + 1 # increment for later:
+                print(f"{self._style.RST}\n") # newline after earch bar.
+            else:
+                print(f" {k}: ")
         if self._total>1:
-            print(f" {self._style.info()} Total issues found: {self._style.parens(str(self._total/self._mod)+f'/{len(self._header_db)}')}")
+            print(f"\n {self._style.info()} Total issues found: {self._style.parens(str(self._total/self._mod)+f'/{len(self._header_db)}')}")
         elif self._total==1:
             print(f" {self._style.info()} One issue found: {self._style.parens(self._total)}")
         else:
