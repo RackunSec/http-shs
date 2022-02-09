@@ -64,15 +64,16 @@ class HeaderDB: ## Just a clean way to store these headers
                     self._findings[self._header_db[k]['risk']] = self._findings[self._header_db[k]['risk']] + 1
             else: ## nested JSON:
                 self._style.fail(f"\"{k}\" HTTP header missing:") # Calculate the Risk and show color:
-                color = self._style.YLL
-                self._findings['low']=self._findings['low']+1
+                if self._header_db[k]['risk']=="low":
+                    color = self._style.YLL
+                    self._findings['low']=self._findings['low']+1
                 if self._header_db[k]['risk']=="med":
                     color = self._style.ORAN
                     self._findings['med']=self._findings['med']+1
-                elif self._header_db[k]['risk']=="high":
+                if self._header_db[k]['risk']=="high":
                     color = self._style.RED
                     self._findings['high']=self._findings['high']+1
-                elif self._header_db[k]['risk']=="info":
+                if self._header_db[k]['risk']=="info":
                     color = self._style.BLUE
                     self._findings['info']=self._findings['info']+1
                 print(f" {self._style.arrow()} {self._style.brackets('Alias')}: {self._style.CMNT}{self._header_db[k]['alias']}{self._style.RST}")
