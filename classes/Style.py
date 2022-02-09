@@ -29,6 +29,10 @@ class Style:
         self.REDBG=bg(197)
         self.YLLBG=bg(226)
 
+    ## Warning Messge:
+    def warn(self):
+        return f"\033[3m{self.YLL}⚠ Warning: "
+
     ## Print an arrow for indentation:
     def arrow(self): # This is just " --> " but fancyier.
         return f"{self.CMNT}{self.RED} →{self.CMNT}"
