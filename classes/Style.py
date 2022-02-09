@@ -35,7 +35,7 @@ class Style:
 
     ## Print an arrow for indentation:
     def arrow(self): # This is just " --> " but fancyier.
-        return f"{self.CMNT}{self.RED} →{self.CMNT}"
+        return f"{self.RED} →{self.RST}"
 
     ## Prompt User for Question:
     def ques(self): # This just asks "[?]" much fancier:
