@@ -46,27 +46,33 @@ class HeaderDB: ## Just a clean way to store these headers
 
     ## Analyze Headers against the HeadersDB Database:
     def analyze_headers(self,headers,args):
-        header_list = []
+        header_list = {}
         for k,v in headers:
-            header_list.append(k.lower())
+            header_list[k.lower()]=v.lower() # make evrything lowercase
             if "--verbose" in args:
                 print(f" {self._style.brackets(k)}: {self._style.CMNT}{v}{self._style.RST}")
+            ## Do some server checks:
+            if k.lower() == "server" and v.lower() == "cloudflare":
+                print(f" {self._style.warn()}Cloudflare detected.{self._style.RST}")
         self._style.header("Header Analysis")
-        for k in self._header_db.keys():
-            if k.lower() in header_list:
-                self._style.ok(f"{k} Discovered\n")
+        for k in self._header_db.keys():  ## loop over keys in DB
+            if k.lower() in header_list.keys():  ## does db key exist in list we made from response headers?
+                self._style.ok(f"{k} Discovered")
+                ## Do some crit_directives checks here and produce warnings:
+                if header_list[k.lower()] in self._header_db[k]['crit_directives']:
+                    print(f" {self._style.warn()}Insecure directive discovered for {k}: {header_list[k.lower()]}")
+                    self._findings[self._header_db[k]['risk']] = self._findings[self._header_db[k]['risk']] + 1
             else: ## nested JSON:
                 self._style.fail(f"\"{k}\" HTTP header missing:") # Calculate the Risk and show color:
-                if self._header_db[k]['risk']=="Low":
-                    color = self._style.YLL
-                    self._findings['low']=self._findings['low']+1
-                if self._header_db[k]['risk']=="Med":
+                color = self._style.YLL
+                self._findings['low']=self._findings['low']+1
+                if self._header_db[k]['risk']=="med":
                     color = self._style.ORAN
                     self._findings['med']=self._findings['med']+1
-                if self._header_db[k]['risk']=="High":
+                elif self._header_db[k]['risk']=="high":
                     color = self._style.RED
                     self._findings['high']=self._findings['high']+1
-                if self._header_db[k]['risk']=="Info":
+                elif self._header_db[k]['risk']=="info":
                     color = self._style.BLUE
                     self._findings['info']=self._findings['info']+1
                 print(f" {self._style.arrow()} {self._style.brackets('Alias')}: {self._style.CMNT}{self._header_db[k]['alias']}{self._style.RST}")
