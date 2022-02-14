@@ -54,7 +54,9 @@ class HeaderDB: ## Just a clean way to store these headers
             ## Do some server checks:
             if k.lower() == "server" and v.lower() == "cloudflare":
                 print(f" {self._style.warn()}Cloudflare detected.{self._style.RST}")
-        self._style.header("Header Analysis")
+            elif k.lower() == "server":  ## Print the server info anyways.
+                print(f" {self._style.brackets('Server')} {v}")
+        self._style.header("Header Analysis")  ## print a nice header to separate the data.
         for k in self._header_db.keys():  ## loop over keys in DB
             if k.lower() in header_list.keys():  ## does db key exist in list we made from response headers?
                 self._style.ok(f"{k} Discovered")
