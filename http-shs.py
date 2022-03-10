@@ -9,7 +9,8 @@ import sys
 import re
 ##
 title = "HTTP Secure Header Scanner"
-style = Style()
+darkmode=True
+style = Style(darkmode)
 if len(sys.argv)==1:
     style.usage(title)
 else:
@@ -19,5 +20,5 @@ else:
         style.fail("URL seems incorrect.")
         sys.exit()
     else: ## We got a good URL:
-        http = Http()
+        http = Http(darkmode)
         http.get_url(url,sys.argv)

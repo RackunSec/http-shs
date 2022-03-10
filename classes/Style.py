@@ -8,26 +8,48 @@
 from sty import fg,bg
 import re # for variable message colors
 class Style:
-    def __init__(self):
-        self.BLK='\033[1m'+fg(233) # Black Text -> use with "BG" values below
-        self.RED=fg(197) # pretty red
-        self.YLL=fg(226) # pretty yellow
-        self.GRN=fg(46) # nice green color
-        self.RST='\033[0m' # reset the color to terminal default
-        self.LMGE='\033[95m' # light magenta
-        self.CMNT='\033[37m\033[3m' # comment-like text
-        self.PPIN=fg(171) # purplish-pink
-        self.PPUR=fg(135) # nice purple
-        self.PINK=fg(201) # pink color
-        self.NET=self.PPUR+' 🖧  '+self.RST # show network icon
-        self.FILE=self.PPUR+' 🗁  '+self.RST # Show file icon
-        self.OK = f"\033[3m{fg(200)}" # OK text color only
-        self.BLUE=fg(39)
-        self.ORAN=fg(208)
-        self.BLUEBG=bg(39)
-        self.ORANBG=bg(208)
-        self.REDBG=bg(197)
-        self.YLLBG=bg(226)
+    def __init__(self,darkmode):
+        self.darkmode = darkmode
+        if  not self.darkmode:
+            self.BLK='\033[1m'+fg(233) # Black Text -> use with "BG" values below
+            self.RED=fg(197) # pretty red
+            self.YLL=fg(226) # pretty yellow
+            self.GRN=fg(46) # nice green color
+            self.RST='\033[0m' # reset the color to terminal default
+            self.LMGE='\033[95m' # light magenta
+            self.CMNT='\033[37m\033[3m' # comment-like text
+            self.PPIN=fg(171) # purplish-pink
+            self.PPUR=fg(135) # nice purple
+            self.PINK=fg(201) # pink color
+            self.NET=self.PPUR+' 🖧  '+self.RST # show network icon
+            self.FILE=self.PPUR+' 🗁  '+self.RST # Show file icon
+            self.OK = f"\033[3m{fg(200)}" # OK text color only
+            self.BLUE=fg(39)
+            self.ORAN=fg(208)
+            self.BLUEBG=bg(39)
+            self.ORANBG=bg(208)
+            self.REDBG=bg(197)
+            self.YLLBG=bg(226)
+        else:
+            self.BLK='\033[0m' # Black Text -> use with "BG" values below
+            self.RED='\033[0m' # pretty red
+            self.YLL='\033[0m' # pretty yellow
+            self.GRN='\033[0m' # nice green color
+            self.RST='\033[0m' # reset the color to terminal default
+            self.LMGE='\033[0m' # light magenta
+            self.CMNT='\033[0m' # comment-like text
+            self.PPIN='\033[0m' # purplish-pink
+            self.PPUR='\033[0m' # nice purple
+            self.PINK='\033[0m' # pink color
+            self.NET='\033[0m' # show network icon
+            self.FILE='\033[0m' # Show file icon
+            self.OK = '\033[0m' # OK text color only
+            self.BLUE='\033[0m'
+            self.ORAN='\033[0m'
+            self.BLUEBG='\033[0m'
+            self.ORANBG='\033[0m'
+            self.REDBG='\033[0m'
+            self.YLLBG='\033[0m'
 
     ## Warning Messge:
     def warn(self):

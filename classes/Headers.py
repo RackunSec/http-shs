@@ -8,8 +8,9 @@
 from classes.Style import Style # for my theme
 import json # to read findings.json file
 class HeaderDB: ## Just a clean way to store these headers
-    def __init__(self):
-        self._style = Style()
+    def __init__(self, darkmode):
+        self.darkmode = darkmode
+        self._style = Style(self.darkmode)
         self._findings = {"info":0,"low":0,"med":0,"high":0} ##  A simple chart of numbers used in issue_graph(self) below.
         with open("findings.json") as findings_json: ## read in the findings.json file and create "db"
             self._header_db = json.load(findings_json)
